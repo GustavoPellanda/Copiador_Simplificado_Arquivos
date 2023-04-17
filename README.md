@@ -8,3 +8,6 @@
   <li>tkinter</li>
   <li>shutil</li>
 </ul>
+
+<h2>Interface</h2>
+<img src="https://user-images.githubusercontent.com/129123498/232365062-8a0e2f6a-8476-4376-89e1-988448c18e0f.png" alt="Interface da aplicação">
