@@ -52,7 +52,7 @@ origem_botao = tk.Button(root, text="Buscar...", command=arquivo_origem)
 origem_botao.grid(row=0, column=2)
 
 destino_caminho = tk.StringVar()
-#destino_default = r"C:\Users\gustavo.pellanda\Documents\copia arquivo\teste1 - Copia"
+#destino_default = r"C:\Users\ adicionar default aqui"
 #destino_caminho.set(destino_default)
 destino_texto = tk.Label(root, text="Destino do Arquivo:", borderwidth=20)
 destino_texto.grid(row=1, column=0)
