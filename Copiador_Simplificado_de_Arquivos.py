@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
+from ftplib import FTP
 import shutil
 
 def arquivo_origem():
@@ -35,9 +36,38 @@ def copia():
         destino_caminho3.get(), 
         destino_caminho4.get()
     ]
+    
     for destino in destinos:
-        if destino:
+        if destino and destino.startswith("ftp://"):
+            upload_ftp(origem, destino)
+        elif destino:
             shutil.copy(origem, destino)
+
+def upload_ftp(local_file_path, ftp_url):
+    # Extrai o nome do arquivo a partir do caminho local do arquivo
+    nome_arquivo = local_file_path.split('/')[-1]
+
+    # Extrai os componentes da URL FTP
+    partes_ftp = ftp_url[6:].split('/', 1)
+    servidor_ftp = partes_ftp[0]
+    diretorio_ftp = partes_ftp[1] if len(partes_ftp) > 1 else ''
+
+    # Conecta ao servidor FTP
+    ftp = FTP(servidor_ftp)
+    ftp.login()
+
+    # Verifica se há um subdiretório no caminho FTP
+    if diretorio_ftp:
+        # Altera para o diretório desejado
+        ftp.cwd(diretorio_ftp)
+
+    # Abre o arquivo local no modo binário
+    with open(local_file_path, 'rb') as arquivo:
+        # Envia o arquivo para o servidor FTP
+        ftp.storbinary('STOR ' + nome_arquivo, arquivo)
+
+    # Fecha a conexão FTP
+    ftp.quit()
 
 root = tk.Tk()
 root.title("Copiador Simplificado de Arquivos")
@@ -97,4 +127,3 @@ copia_botao = tk.Button(root, text="Copiar Arquivo", command=copia)
 copia_botao.grid(row=6, column=1)
 
 root.mainloop()
-
